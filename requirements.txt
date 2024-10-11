@@ -1,0 +1,5 @@
+mplsoccer
+networkx
+numpy
+pandas
+streamlit
