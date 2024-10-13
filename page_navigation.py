@@ -30,7 +30,7 @@ pg = st.navigation(
 
 
 # --- SHARED ON ALL PAGES ---
-st.logo("assets/codingisfun_logo.png")
+st.logo("baller_metrics_logo-removebg-preview.png")
 st.sidebar.markdown("@baller_metrics - Follow us on Instagram")
 
 
