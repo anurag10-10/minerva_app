@@ -4,9 +4,33 @@ import numpy as np
 import pickle
 import json
 import main_minerva
+import gdown
+import os
+
+# Access the Google Drive link from Streamlit secrets
+url = st.secrets["url"]
+
+# Path where the model will be saved in the Streamlit Cloud environment
+model_path = 'player_ratings_prediction.pickle'
+
+# Function to download the model if not already downloaded
+def download_model(url, output_path):
+    if not os.path.exists(output_path):
+        st.write("Downloading the model...")
+        gdown.download(url, output_path, quiet=False)
+    else:
+        st.write("Model already exists.")
+
+# Download the model if it doesn't already exist
+download_model(url, model_path)
+
+# Load the model using pickle
+with open(model_path, 'rb') as f:
+    model = pickle.load(f)
+
 
 # Load the model
-model = pickle.load(open('player_ratings_prediction.pickle', 'rb'))
+#model = pickle.load(open('player_ratings_prediction.pickle', 'rb'))
 
 # Load the columns from the JSON file
 with open('model_columns.json', 'r') as file:
