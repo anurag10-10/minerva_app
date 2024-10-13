@@ -15,39 +15,25 @@ model_path = 'player_ratings_prediction.pickle'
 
 # Function to download the model if not already downloaded
 def download_model(url, output_path):
-    if not os.path.exists(output_path):
-        st.write("Downloading the model...")
-        gdown.download(url, output_path, quiet=False, fuzzy=True, use_cookies=False)
-    else:
-        st.write("Model already exists.")
-    
-    # Check if the file exists and its size
-    if os.path.exists(output_path):
-        st.write(f"Downloaded file size: {os.path.getsize(output_path)} bytes")
-    else:
-        st.error("Model download failed.")
+    if not os.path.exists(output_path):  # Check if model already exists
+        gdown.download(url, output_path, quiet=True, fuzzy=True, use_cookies=False)
+
+# Path where the model will be saved in the Streamlit Cloud environment
+model_path = 'player_ratings_prediction.pickle'
 
 # Download the model if it doesn't already exist
-download_model(url, model_path)
+download_model(st.secrets["url"], model_path)
 
-# Check the file size after download
-if os.path.exists(model_path):
-    file_size = os.path.getsize(model_path)
-    st.write(f"Downloaded file size: {file_size} bytes")
-    
-    if file_size < 1000000:  # Example: if the file size is still too small (1 MB)
-        st.error("The file might not have downloaded properly. Please check the URL or try again.")
-else:
-    st.error("Model download failed.")
-
-# Load the model using pickle
-if os.path.exists(model_path) and os.path.getsize(model_path) > 1000000:  # Make sure file size is reasonable
+# Check if the file exists and has a reasonable size
+if os.path.exists(model_path) and os.path.getsize(model_path) > 1_000_000:  # Check for files larger than 1MB
     try:
         with open(model_path, 'rb') as f:
             model = pickle.load(f)
-        st.write("Model loaded successfully!")
     except pickle.UnpicklingError:
-        st.error("Error unpickling the file. It may not be a valid pickle file.")
+        st.error("Error loading the model. The file might be corrupted.")
+else:
+    st.error("Model download failed or the file is too small.")
+    
 # Load the model using pickle
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
