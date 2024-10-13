@@ -20,9 +20,26 @@ def download_model(url, output_path):
         gdown.download(url, output_path, quiet=False)
     else:
         st.write("Model already exists.")
+    
+    # Check if the file exists and its size
+    if os.path.exists(output_path):
+        st.write(f"Downloaded file size: {os.path.getsize(output_path)} bytes")
+    else:
+        st.error("Model download failed.")
 
 # Download the model if it doesn't already exist
 download_model(url, model_path)
+
+# Function to download the model if not already downloaded
+#def download_model(url, output_path):
+ #   if not os.path.exists(output_path):
+  #      st.write("Downloading the model...")
+   #     gdown.download(url, output_path, quiet=False)
+    #else:
+     #   st.write("Model already exists.")
+
+# Download the model if it doesn't already exist
+#download_model(url, model_path)
 
 # Load the model using pickle
 with open(model_path, 'rb') as f:
