@@ -29,7 +29,7 @@ with open(model_path, 'rb') as f:
     model = pickle.load(f)
 
 
-# Load the model
+# Load the model #
 #model = pickle.load(open('player_ratings_prediction.pickle', 'rb'))
 
 # Load the columns from the JSON file
