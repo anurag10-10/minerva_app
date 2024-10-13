@@ -17,7 +17,7 @@ model_path = 'player_ratings_prediction.pickle'
 def download_model(url, output_path):
     if not os.path.exists(output_path):
         st.write("Downloading the model...")
-        gdown.download(url, output_path, quiet=False, fuzzy=True)
+        gdown.download(url, output_path, quiet=False, fuzzy=True, use_cookies=False)
     else:
         st.write("Model already exists.")
     
@@ -48,17 +48,6 @@ if os.path.exists(model_path) and os.path.getsize(model_path) > 1000000:  # Make
         st.write("Model loaded successfully!")
     except pickle.UnpicklingError:
         st.error("Error unpickling the file. It may not be a valid pickle file.")
-# Function to download the model if not already downloaded
-#def download_model(url, output_path):
- #   if not os.path.exists(output_path):
-  #      st.write("Downloading the model...")
-   #     gdown.download(url, output_path, quiet=False)
-    #else:
-     #   st.write("Model already exists.")
-
-# Download the model if it doesn't already exist
-#download_model(url, model_path)
-
 # Load the model using pickle
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
